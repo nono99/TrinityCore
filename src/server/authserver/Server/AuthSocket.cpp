@@ -394,6 +394,9 @@ bool AuthSocket::_HandleLogonChallenge()
                 //set expired bans to inactive
                 LoginDatabase.Execute(LoginDatabase.GetPreparedStatement(LOGIN_SET_EXPIREDACCBANS));
 
+                // Set expired vip accounts to inactive
+                LoginDatabase.Execute(LoginDatabase.GetPreparedStatement(LOGIN_SET_EXPIREDACCVIP));
+
                 // If the account is banned, reject the logon attempt
                 stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_ACCBANNED);
                 stmt->setUInt32(0, fields[1].GetUInt32());

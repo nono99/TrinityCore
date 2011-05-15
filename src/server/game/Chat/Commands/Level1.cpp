@@ -615,6 +615,14 @@ bool ChatHandler::HandleLookupAreaCommand(const char* args)
 //Find tele in game_tele order by name
 bool ChatHandler::HandleLookupTeleCommand(const char * args)
 {
+    AccountTypes level = m_session->GetSecurity();
+    if (uint32(level) == 0 && !m_session->IsVIP())
+    {
+        SendSysMessage("Your account is not VIP.");
+        SetSentErrorMessage(true);
+        return false;
+    }
+
     if (!*args)
     {
         SendSysMessage(LANG_COMMAND_TELE_PARAMETER);

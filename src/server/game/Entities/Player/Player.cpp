@@ -14887,6 +14887,10 @@ void Player::RewardQuest(Quest const *pQuest, uint32 reward, Object* questGiver,
     for (Unit::AuraEffectList::const_iterator i = ModXPPctAuras.begin(); i != ModXPPctAuras.end(); ++i)
         AddPctN(XP, (*i)->GetAmount());
 
+    // VIPs get 10% more XP
+    if (GetSession()->IsVIP())
+        XP *= 1.1f;
+
     int32 moneyRew = 0;
     if (getLevel() < sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
         GiveXP(XP, NULL);

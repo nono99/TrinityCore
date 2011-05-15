@@ -178,7 +178,9 @@ namespace Trinity
                         gain *= 2;
                 }
 
-                gain = uint32(gain * sWorld->getRate(RATE_XP_KILL));
+                // VIPs get 10% more XP
+                float vip_rate = pl->GetSession()->IsVIP() ? 1.1f : 1.0f;
+                gain = uint32(gain * sWorld->getRate(RATE_XP_KILL) * vip_rate);
             }
 
             sScriptMgr->OnGainCalculation(gain, pl, u);
