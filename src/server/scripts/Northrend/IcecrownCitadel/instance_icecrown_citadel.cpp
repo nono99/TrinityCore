@@ -101,16 +101,42 @@ class instance_icecrown_citadel : public InstanceMapScript
                 memset(BloodCouncilGUIDs, 0, 3*sizeof(uint64));
                 BloodCouncilControllerGUID = 0;
                 BloodQueenLanaThelGUID = 0;
+                dreamwalkerCache = 0;
                 SindragosaGUID = 0;
                 SpinestalkerGUID = 0;
                 RimefangGUID = 0;
+                valithriaDreamwalker  = 0;
+                valithriaAlternative  = 0;
+                greenDragonCombatTrigger = 0;
+                valithriaRoostDoor1 = 0;
+                valithriaRoostDoor2 = 0;
+                valithriaRoostDoor3 = 0;
+                valithriaRoostDoor4 = 0;
+                valithriaElevator = 0;
+                lichKing = 0;
+                tirion = 0;
+                terenasFighter = 0;
+                spiritWarden = 0;
                 FrostwyrmCount = 0;
                 SpinestalkerTrashCount = 0;
                 RimefangTrashCount = 0;
+                necroticStack = 0;
+                beenWaiting = 0;
+                neckDeep = 0;
+                iceShard1 = 0;
+                iceShard2 = 0;
+                iceShard3 = 0;
+                iceShard4 = 0;
+                frostyEdgeInner = 0;
+                frostyEdgeOuter = 0;
+                edgeDestroyWarning = 0;
+                frozenLavaman = 0;
+                lavamanPillars = 0;
                 IsBonedEligible = true;
                 IsOozeDanceEligible = true;
                 IsNauseaEligible = true;
                 IsOrbWhispererEligible = true;
+                isPortalJockeyEligible  = 0;
                 ColdflameJetsState = NOT_STARTED;
                 BloodQuickeningState = NOT_STARTED;
                 BloodQuickeningTimer = 0;
@@ -233,6 +259,32 @@ class instance_icecrown_citadel : public InstanceMapScript
                         RimefangGUID = creature->GetGUID();
                         if (!creature->isDead())
                             ++FrostwyrmCount;
+                        break;
+                    case NPC_VALITHRIA_DREAMWALKER:
+                        valithriaDreamwalker = creature->GetGUID();
+                        break;
+                    case NPC_VALITHRIA_ALTERNATIVE:
+                        valithriaAlternative = creature->GetGUID();
+                        break;
+                    case NPC_GREEN_DRAGON_COMBAT_TRIGGER:
+                        greenDragonCombatTrigger = creature->GetGUID();
+                        creature->SetReactState(REACT_AGGRESSIVE);
+                        creature->SetSpeed(MOVE_RUN, 0.0f, true);
+                        creature->SetSpeed(MOVE_WALK, 0.0f, true);
+                        creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_DISABLE_MOVE | UNIT_FLAG_NOT_SELECTABLE);
+                        creature->SetVisible(false);
+                        break;
+                    case NPC_THE_LICH_KING:
+                        lichKing = creature->GetGUID();
+                        break;
+                    case NPC_TIRION:
+                        tirion = creature->GetGUID();
+                        break;
+                    case NPC_TERENAS_FIGHTER:
+                        terenasFighter = creature->GetGUID();
+                        break;
+                    case NPC_SPIRIT_WARDEN:
+                        spiritWarden = creature->GetGUID();
                         break;
                     default:
                         break;
@@ -370,6 +422,61 @@ class instance_icecrown_citadel : public InstanceMapScript
                     case GO_DRINK_ME:
                         PutricideTableGUID = go->GetGUID();
                         break;
+                    case GO_DREAMWALKER_CACHE_10N:
+                    case GO_DREAMWALKER_CACHE_25N:
+                    case GO_DREAMWALKER_CACHE_10H:
+                    case GO_DREAMWALKER_CACHE_25H:
+                        dreamwalkerCache = go->GetGUID();
+                        break;
+                    case GO_VALITHRIA_ROOST_DOOR_1:
+                        valithriaRoostDoor1 = go->GetGUID();
+                        break;
+                    case GO_VALITHRIA_ROOST_DOOR_2:
+                        valithriaRoostDoor2 = go->GetGUID();
+                        break;
+                    case GO_VALITHRIA_ROOST_DOOR_3:
+                        valithriaRoostDoor3 = go->GetGUID();
+                        break;
+                    case GO_VALITHRIA_ROOST_DOOR_4:
+                        valithriaRoostDoor4 = go->GetGUID();
+                        break;
+                    case GO_VALITHRIA_ELEVATOR:
+                        valithriaElevator = go->GetGUID();
+                        break;
+                    case GO_FROZEN_LAVAMAN:
+                        frozenLavaman = go->GetGUID();
+                        break;
+                    case GO_LAVAMAN_PILLARS:
+                        lavamanPillars = go->GetGUID();
+                        break;
+                    case GO_ICE_SHARD_1:
+                        iceShard1 = go->GetGUID();
+                        go->SetGoState(GetBossState(DATA_THE_LICH_KING) == DONE ? GO_STATE_ACTIVE : GO_STATE_READY);
+                        break;
+                    case GO_ICE_SHARD_2:     
+                        iceShard2 = go->GetGUID();
+                        go->SetGoState(GetBossState(DATA_THE_LICH_KING) == DONE ? GO_STATE_ACTIVE : GO_STATE_READY);
+                        break;
+                    case GO_ICE_SHARD_3:
+                        iceShard3 = go->GetGUID();
+                        go->SetGoState(GetBossState(DATA_THE_LICH_KING) == DONE ? GO_STATE_ACTIVE : GO_STATE_READY);
+                        break;
+                    case GO_ICE_SHARD_4:
+                        iceShard4 = go->GetGUID();
+                        go->SetGoState(GetBossState(DATA_THE_LICH_KING) == DONE ? GO_STATE_ACTIVE : GO_STATE_READY);
+                        break;
+                    case GO_FROSTY_EDGE_OUTER:
+                        frostyEdgeOuter = go->GetGUID();
+                        go->SetGoState(GO_STATE_ACTIVE);
+                        break;
+                    case GO_FROSTY_EDGE_INNER:
+                        frostyEdgeInner = go->GetGUID();
+                        go->SetGoState(GO_STATE_READY);
+                        break;
+                    case GO_EDGE_DESTROY_WARNING:
+                        edgeDestroyWarning = go->GetGUID();
+                        go->SetGoState(GO_STATE_READY);
+                        break;
                     default:
                         break;
                 }
@@ -423,6 +530,12 @@ class instance_icecrown_citadel : public InstanceMapScript
                         return BloodQuickeningState;
                     case DATA_HEROIC_ATTEMPTS:
                         return HeroicAttempts;
+                    case DATA_PORTAL_JOCKEY_ACHIEVEMENT:
+                        return isPortalJockeyEligible ? true : false;
+                    case DATA_BEEN_WAITING_ACHIEVEMENT:
+                        return beenWaiting;
+                    case DATA_NECK_DEEP_ACHIEVEMENT:
+                        return neckDeep;
                     default:
                         break;
                 }
@@ -466,6 +579,38 @@ class instance_icecrown_citadel : public InstanceMapScript
                         return SpinestalkerGUID;
                     case DATA_RIMEFANG:
                         return RimefangGUID;
+                    case DATA_VALITHRIA_DREAMWALKER:
+                        return valithriaDreamwalker;
+                    case DATA_VALITHRIA_ALTERNATIVE:
+                        return valithriaAlternative;
+                    case DATA_GREEN_DRAGON_COMBAT_TRIGGER:
+                        return greenDragonCombatTrigger;
+                    case DATA_THE_LICH_KING:
+                        return lichKing;
+                    case DATA_TIRION:
+                        return tirion;
+                    case DATA_TERENAS_FIGHTER:
+                        return terenasFighter;
+                    case DATA_SPIRIT_WARDEN:
+                        return spiritWarden;
+                    case DATA_FROZEN_LAVAMAN:
+                        return frozenLavaman;
+                    case DATA_LAVAMAN_PILLARS:
+                        return lavamanPillars;
+                    case DATA_ICE_SHARD_1:
+                        return iceShard1;
+                    case DATA_ICE_SHARD_2:
+                        return iceShard2;
+                    case DATA_ICE_SHARD_3:
+                        return iceShard3;
+                    case DATA_ICE_SHARD_4:
+                        return iceShard4;
+                    case DATA_FROSTY_EDGE_OUTER:
+                        return frostyEdgeOuter;
+                    case DATA_FROSTY_EDGE_INNER:
+                        return frostyEdgeInner;
+                    case DATA_EDGE_DESTROY_WARNING:
+                        return edgeDestroyWarning;
                     default:
                         break;
                 }
@@ -568,6 +713,42 @@ class instance_icecrown_citadel : public InstanceMapScript
                         }
                         break;
                     case DATA_VALITHRIA_DREAMWALKER:
+                        switch (state)
+                        {
+                            case DONE:
+                                DoRespawnGameObject(dreamwalkerCache, 7 * DAY);
+
+                                if (GameObject* go = instance->GetGameObject(valithriaElevator))
+                                {
+                                    go->SetUInt32Value(GAMEOBJECT_LEVEL, 0);
+                                    go->SetGoState(GO_STATE_READY);
+                                }
+                                break;
+							case IN_PROGRESS:
+                                HandleGameObject(valithriaRoostDoor2, true);
+                                HandleGameObject(valithriaRoostDoor3, true);
+
+                                if (instance->GetDifficulty() == RAID_DIFFICULTY_25MAN_NORMAL || instance->GetDifficulty() == RAID_DIFFICULTY_25MAN_HEROIC)
+                                {
+                                    HandleGameObject(valithriaRoostDoor1, true);
+                                    HandleGameObject(valithriaRoostDoor4, true);
+                                }
+                                break;
+                            case FAIL:
+                                HandleGameObject(valithriaRoostDoor1, false);
+                                HandleGameObject(valithriaRoostDoor2, false);
+                                HandleGameObject(valithriaRoostDoor3, false);
+                                HandleGameObject(valithriaRoostDoor4, false);
+                                break;
+                            case NOT_STARTED:
+                                HandleGameObject(valithriaRoostDoor1, false);
+                                HandleGameObject(valithriaRoostDoor2, false);
+                                HandleGameObject(valithriaRoostDoor3, false);
+                                HandleGameObject(valithriaRoostDoor4, false);
+                                break;
+                            default:
+                                break;
+                        }
                         break;
                     case DATA_SINDRAGOSA:
                         HandleGameObject(FrostwingSigilGUID, state != DONE);
@@ -584,6 +765,20 @@ class instance_icecrown_citadel : public InstanceMapScript
                         }
                         break;
                     case DATA_THE_LICH_KING:
+                        if (state == NOT_STARTED)
+                        {
+                            if (GameObject* go = instance->GetGameObject(frozenLavaman))
+                                go->SetPhaseMask(2, true);
+                        }
+
+                        if (state == DONE)
+                        {
+                            if (GameObject* go = instance->GetGameObject(frozenLavaman))
+                                go->SetPhaseMask(1, true);
+
+                            if (GameObject* go = instance->GetGameObject(lavamanPillars))
+                                go->SetPhaseMask(2, true);
+                        }
                         break;
                     default:
                         break;
@@ -733,6 +928,12 @@ class instance_icecrown_citadel : public InstanceMapScript
                         SaveToDB();
                         break;
                     }
+                    case DATA_PORTAL_JOCKEY_ACHIEVEMENT:
+                        isPortalJockeyEligible = data ? true : false;
+                    case DATA_NECK_DEEP_ACHIEVEMENT:         
+                        neckDeep = data;
+                    case DATA_BEEN_WAITING_ACHIEVEMENT:         
+                        necroticStack = data;
                     default:
                         break;
                 }
@@ -866,8 +1067,8 @@ class instance_icecrown_citadel : public InstanceMapScript
                             return false;
                         // no break
                     case DATA_SINDRAGOSA:
-                        //if (GetBossState(DATA_VALITHRIA_DREAMWALKER) != DONE)
-                        //    return false;
+                        if (GetBossState(DATA_VALITHRIA_DREAMWALKER) != DONE)
+                            return false;
                         break;
                     default:
                         break;
@@ -1011,9 +1212,31 @@ class instance_icecrown_citadel : public InstanceMapScript
             uint64 BloodCouncilGUIDs[3];
             uint64 BloodCouncilControllerGUID;
             uint64 BloodQueenLanaThelGUID;
+            uint64 dreamwalkerCache;
             uint64 SindragosaGUID;
             uint64 SpinestalkerGUID;
             uint64 RimefangGUID;
+            uint64 valithriaDreamwalker;
+            uint64 valithriaAlternative;
+            uint64 greenDragonCombatTrigger;
+            uint64 valithriaRoostDoor1;
+            uint64 valithriaRoostDoor2;
+            uint64 valithriaRoostDoor3;
+            uint64 valithriaRoostDoor4;
+            uint64 valithriaElevator;
+            uint64 lichKing;
+            uint64 tirion;
+            uint64 terenasFighter;
+            uint64 spiritWarden;
+            uint64 iceShard1;
+            uint64 iceShard2;
+            uint64 iceShard3;
+            uint64 iceShard4;
+            uint64 frostyEdgeInner;
+            uint64 frostyEdgeOuter;
+            uint64 edgeDestroyWarning;
+            uint64 frozenLavaman;
+            uint64 lavamanPillars;
             uint32 TeamInInstance;
             uint32 BloodQuickeningTimer;
             uint32 ColdflameJetsState;
@@ -1023,6 +1246,10 @@ class instance_icecrown_citadel : public InstanceMapScript
             uint32 BloodQuickeningState;
             uint16 HeroicAttempts;
             uint16 BloodQuickeningMinutes;
+            uint8 beenWaiting;
+            uint8 neckDeep;
+            uint8 necroticStack;
+            uint8 isPortalJockeyEligible;
             bool IsBonedEligible;
             bool IsOozeDanceEligible;
             bool IsNauseaEligible;
@@ -1034,6 +1261,101 @@ class instance_icecrown_citadel : public InstanceMapScript
             return new instance_icecrown_citadel_InstanceMapScript(map);
         }
 };
+
+void UnsummonSpecificCreaturesNearby(Creature* ref, uint32 entry, float radius)
+{
+    std::list<Creature*> allCreaturesWithEntry;
+    GetCreatureListWithEntryInGrid(allCreaturesWithEntry, ref, entry, radius);
+
+    for(std::list<Creature*>::iterator itr = allCreaturesWithEntry.begin(); itr != allCreaturesWithEntry.end(); ++itr)
+    {
+        Creature* candidate = *itr;
+
+        if (!candidate)
+            continue;
+
+        if (TempSummon* summon = candidate->ToTempSummon())
+            summon->DespawnOrUnsummon();
+    }
+}
+
+uint32 GetPhase(const EventMap &em)
+{
+    switch (em.GetPhaseMask())
+    {
+        case 0x01: return 0;
+        case 0x02: return 1;
+        case 0x04: return 2;
+        case 0x08: return 3;
+        case 0x10: return 4;
+        case 0x20: return 5;
+        case 0x40: return 6;
+        case 0x80: return 7;
+        default:
+            return 0;
+    }
+}
+
+void LeaveOnlyPlayers(std::list<Unit*> &unitList)
+{
+    for (std::list<Unit*>::iterator itr = unitList.begin(); itr != unitList.end();)
+    {
+        if ((*itr)->GetTypeId() != TYPEID_PLAYER)
+            unitList.erase(itr++);
+        else
+            ++itr;
+    }
+
+    std::list<Unit*>::iterator itr = unitList.begin();
+    std::advance(itr, urand(0, unitList.size()-1));
+    Unit* target = *itr;
+    unitList.clear();
+    unitList.push_back(target);
+}
+
+class TeleportToFrozenThrone : public BasicEvent
+{
+    public:
+        TeleportToFrozenThrone(Player *player, uint8 attempts): pPlayer(player), attemptsLeft(attempts) { }
+
+        bool Execute(uint64 /*eventTime*/, uint32 /*updateTime*/)
+        {
+            pPlayer->CastSpell(pPlayer, FROZEN_THRONE_TELEPORT, true);
+            if (--attemptsLeft)
+                pPlayer->m_Events.AddEvent(new TeleportToFrozenThrone(pPlayer, attemptsLeft), pPlayer->m_Events.CalculateTime(uint64(1500)));
+            return true;
+        }
+    private:
+        Player *pPlayer;
+        uint8 attemptsLeft;
+};
+
+void TeleportPlayerToFrozenThrone(Player *player)
+{
+    player->m_Events.AddEvent(new TeleportToFrozenThrone(player, 2), player->m_Events.CalculateTime(uint64(5000)));
+}
+
+TPlayerList GetPlayersInTheMap(Map *pMap)
+{
+    TPlayerList players;
+    const Map::PlayerList &PlayerList = pMap->GetPlayers();
+    if (!PlayerList.isEmpty())
+        for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
+            if (Player* player = i->getSource())
+                players.push_back(player);
+    return players;
+}
+
+TPlayerList GetAttackablePlayersInTheMap(Map *pMap)
+{
+    TPlayerList players = GetPlayersInTheMap(pMap);
+    for (TPlayerList::iterator it = players.begin(); it != players.end();)
+        if (!(*it)->isTargetableForAttack())
+            players.erase(it++);
+        else
+            ++it;
+    return players;
+}
 
 void AddSC_instance_icecrown_citadel()
 {
