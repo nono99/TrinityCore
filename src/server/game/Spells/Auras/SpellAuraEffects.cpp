@@ -830,9 +830,12 @@ void AuraEffect::CalculatePeriodic(Unit * caster, bool create)
         {
             // Haste modifies periodic time of channeled spells
             if (IsChanneledSpell(m_spellProto))
-                caster->ModSpellCastTime(m_spellProto, m_amplitude);
+            {
+                if (m_spellProto->AttributesEx5 & SPELL_ATTR5_HASTE_AFFECT_DURATION)
+                    caster->ModSpellCastTime(m_spellProto, m_amplitude);
+            }
             // and periodic time of auras affected by SPELL_AURA_PERIODIC_HASTE
-            if (caster->HasAuraTypeWithAffectMask(SPELL_AURA_PERIODIC_HASTE, m_spellProto) || m_spellProto->AttributesEx5 & SPELL_ATTR5_HASTE_AFFECT_DURATION)
+            else if (caster->HasAuraTypeWithAffectMask(SPELL_AURA_PERIODIC_HASTE, m_spellProto) || m_spellProto->AttributesEx5 & SPELL_ATTR5_HASTE_AFFECT_DURATION)
                 m_amplitude = int32(m_amplitude * caster->GetFloatValue(UNIT_MOD_CAST_SPEED));
         }
     }
@@ -2117,7 +2120,7 @@ void AuraEffect::PeriodicDummyTick(Unit * target, Unit * caster) const
             {
                 case 49016: // Hysteria
                     uint32 damage = uint32(target->CountPctFromMaxHealth(1));
-                    target->DealDamage(target, damage, NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                    target->DealDamage(target, damage, NULL, NODAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                     break;
             }
             // Death and Decay
@@ -2146,22 +2149,12 @@ void AuraEffect::PeriodicDummyTick(Unit * target, Unit * caster) const
     }
 }
 
-Unit* AuraEffect::GetTriggerTarget(Unit * target) const
-{
-    if (target->GetTypeId() == TYPEID_UNIT)
-    {
-        if (Unit * trigger = target->ToCreature()->AI()->GetAuraEffectTriggerTarget(GetId(), GetEffIndex()))
-            return trigger;
-    }
-    return target;
-}
-
 void AuraEffect::TriggerSpell(Unit * target, Unit * caster) const
 {
     if (!caster || !target)
         return;
 
-    Unit* triggerTarget = GetTriggerTarget(target);
+    Unit* triggerTarget = target;
 
     // generic casting code with custom spells and target/caster customs
     uint32 triggerSpellId = GetSpellProto()->EffectTriggerSpell[GetEffIndex()];
@@ -2465,7 +2458,7 @@ void AuraEffect::TriggerSpellWithValue(Unit * target, Unit * caster) const
     if (!caster || !target)
         return;
 
-    Unit* triggerTarget = GetTriggerTarget(target);
+    Unit* triggerTarget = target;
 
     uint32 triggerSpellId = GetSpellProto()->EffectTriggerSpell[m_effIndex];
     SpellEntry const *triggeredSpellInfo = sSpellStore.LookupEntry(triggerSpellId);
@@ -3023,7 +3016,7 @@ void AuraEffect::HandlePhase(AuraApplication const * aurApp, uint8 mode, bool ap
     }
 
     // need triggering visibility update base at phase update of not GM invisible (other GMs anyway see in any phases)
-    if (!target->IsVisible())
+    if (target->IsVisible())
         target->UpdateObjectVisibility();
 }
 
