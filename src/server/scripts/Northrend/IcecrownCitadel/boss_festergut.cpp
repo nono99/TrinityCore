@@ -94,7 +94,7 @@ class boss_festergut : public CreatureScript
                 events.ScheduleEvent(EVENT_BERSERK, 300000);
                 events.ScheduleEvent(EVENT_INHALE_BLIGHT, urand(25000, 30000));
                 events.ScheduleEvent(EVENT_GAS_SPORE, urand(20000, 25000));
-                events.ScheduleEvent(EVENT_GASTRIC_BLOAT, urand(12500, 15000));
+                //events.ScheduleEvent(EVENT_GASTRIC_BLOAT, urand(12500, 15000));
                 _maxInoculatedStack = 0;
                 _inhaleCounter = 0;
                 me->RemoveAurasDueToSpell(SPELL_BERSERK2);
@@ -103,7 +103,7 @@ class boss_festergut : public CreatureScript
                     _gasDummyGUID = gasDummy->GetGUID();
                     for (uint8 i = 0; i < 3; ++i)
                     {
-                        me->RemoveAurasDueToSpell(gaseousBlight[i]);
+                        //me->RemoveAurasDueToSpell(gaseousBlight[i]);
                         gasDummy->RemoveAurasDueToSpell(gaseousBlightVisual[i]);
                     }
                 }
@@ -194,8 +194,8 @@ class boss_festergut : public CreatureScript
                                 DoCast(me, SPELL_INHALE_BLIGHT);
                                 // just cast and dont bother with target, conditions will handle it
                                 ++_inhaleCounter;
-                                if (_inhaleCounter < 3)
-                                    me->CastSpell(me, gaseousBlight[_inhaleCounter], true, NULL, NULL, me->GetGUID());
+                                //if (_inhaleCounter < 3)
+                                    //me->CastSpell(me, gaseousBlight[_inhaleCounter], true, NULL, NULL, me->GetGUID());
                             }
 
                             events.ScheduleEvent(EVENT_INHALE_BLIGHT, urand(33500, 35000));
@@ -257,7 +257,7 @@ class boss_festergut : public CreatureScript
                 if (Creature* gasDummy = ObjectAccessor::GetCreature(*me, _gasDummyGUID))
                     for (uint8 i = 0; i < 3; ++i)
                     {
-                        me->RemoveAurasDueToSpell(gaseousBlight[i]);
+                        //me->RemoveAurasDueToSpell(gaseousBlight[i]);
                         gasDummy->RemoveAurasDueToSpell(gaseousBlightVisual[i]);
                     }
             }
