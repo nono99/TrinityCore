@@ -19075,8 +19075,6 @@ void Player::UpdatePvPFlag(time_t currTime)
         return;
     if (pvpInfo.endTimer == 0 || currTime < (pvpInfo.endTimer + 300) || pvpInfo.inHostileArea)
         return;
-    if (pvpInfo.inHostileArea)
-        return;
 
     UpdatePvP(false);
 }
