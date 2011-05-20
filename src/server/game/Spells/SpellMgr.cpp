@@ -3659,6 +3659,11 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_TARGET_ENEMY;
             ++count;
             break;
+        case 8494: // Mana Shield (rank 2)
+            // because of bug in dbc
+            spellInfo->procChance = 0;
+            ++count;
+            break;
         case 32182: // Heroism
             spellInfo->excludeCasterAuraSpell = 57723; // Exhaustion
             ++count;
@@ -3875,6 +3880,11 @@ void SpellMgr::LoadSpellCustomAttr()
             break;
         case 48422:
             spellInfo->Stances = 1 << (FORM_TREE - 1);
+            ++count;
+            break;
+        case 47569: // Improved Shadowform (Rank 1)
+            // with this spell atrribute aura can be stacked several times
+            spellInfo->Attributes &= ~SPELL_ATTR0_NOT_SHAPESHIFT;
             ++count;
             break;
         case 30421: // Nether Portal - Perseverence
