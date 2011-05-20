@@ -24,7 +24,6 @@ EndScriptData */
 
 #include "ScriptMgr.h"
 #include "AccountMgr.h"
-#include "MapManager.h"
 #include "Chat.h"
 
 class vip_commandscript : public CommandScript
