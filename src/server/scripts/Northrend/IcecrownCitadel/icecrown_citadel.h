@@ -87,32 +87,11 @@ enum DataTypes
     DATA_TEAM_IN_INSTANCE           = 26,
     DATA_BLOOD_QUICKENING_STATE     = 27,
     DATA_HEROIC_ATTEMPTS            = 28,
-    // Valithria Dreamwalker Data
-    DATA_VALITHRIA_ALTERNATIVE      = 29,
-    DATA_GREEN_DRAGON_COMBAT_TRIGGER= 30,
-    DATA_PORTAL_JOCKEY_ACHIEVEMENT  = 31,
-    // Lich King Data
-    DATA_TIRION                     = 32,
-    DATA_TERENAS_FIGHTER            = 33,
-    DATA_SPIRIT_WARDEN              = 35,
-    DATA_BEEN_WAITING_ACHIEVEMENT   = 36,
-    DATA_NECK_DEEP_ACHIEVEMENT      = 37,
-
-    // Go Data
-    DATA_ICE_SHARD_1                = 38,
-    DATA_ICE_SHARD_2                = 39,
-    DATA_ICE_SHARD_3                = 40,
-    DATA_ICE_SHARD_4                = 41,
-    DATA_FROSTY_EDGE_OUTER          = 42,
-    DATA_FROSTY_EDGE_INNER          = 43,
-    DATA_EDGE_DESTROY_WARNING       = 44,
-    DATA_FROZEN_LAVAMAN             = 45,
-    DATA_LAVAMAN_PILLARS            = 46,
-    DATA_CROK_SCOURGEBANE           = 47,
-    DATA_CAPTAIN_ARNATH             = 48,
-    DATA_CAPTAIN_BRANDON            = 49,
-    DATA_CAPTAIN_GRONDEL            = 50,
-    DATA_CAPTAIN_RUPERT             = 51,
+    DATA_CROK_SCOURGEBANE           = 29,
+    DATA_CAPTAIN_ARNATH             = 30,
+    DATA_CAPTAIN_BRANDON            = 31,
+    DATA_CAPTAIN_GRONDEL            = 32,
+    DATA_CAPTAIN_RUPERT             = 33,
 };
 
 enum CreaturesIds
@@ -213,26 +192,6 @@ enum CreaturesIds
     // Blood-Queen Lana'thel
     NPC_BLOOD_QUEEN_LANA_THEL                   = 37955,
 
-    // Valithria Dreamwalker
-    NPC_VALITHRIA_DREAMWALKER                   = 36789,
-    NPC_VALITHRIA_ALTERNATIVE                   = 37950,
-    NPC_PORTAL_NORMAL_MODE_PRE                  = 38186,
-    NPC_PORTAL_NORMAL_MODE_NPC                  = 37945,
-    NPC_PORTAL_HEROIC_MODE_PRE                  = 38429,
-    NPC_PORTAL_HEROIC_MODE_NPC                  = 38430,
-    NPC_ROT_WORM                                = 37907,
-    NPC_PORTAL                                  = 37945,
-    NPC_DREAM_CLOUD                             = 37985,
-    NPC_NIGHTMARE_CLOUD                         = 38421,
-    NPC_MANA_VOID                               = 38068,
-    NPC_ABOMINATION                             = 37886,
-    NPC_SKELETON                                = 36791,
-    NPC_ARCHMAGE                                = 37868,
-    NPC_SUPPRESSOR                              = 37863,
-    NPC_ZOMBIE                                  = 37934,
-    NPC_COLUMN_OF_FROST                         = 37918,
-    NPC_GREEN_DRAGON_COMBAT_TRIGGER             = 38752,
-
     // Frostwing Halls gauntlet event
     NPC_CROK_SCOURGEBANE                        = 37129,
     NPC_CAPTAIN_ARNATH                          = 37122,
@@ -251,6 +210,16 @@ enum CreaturesIds
     NPC_SISTER_SVALNA                           = 37126,
     NPC_IMPALING_SPEAR                          = 38248,
 
+    // Valithria Dreamwalker
+    NPC_VALITHRIA_DREAMWALKER                   = 36789,
+    NPC_GREEN_DRAGON_COMBAT_TRIGGER             = 38752,
+    NPC_RISEN_ARCHMAGE                          = 37868,
+    NPC_BLAZING_SKELETON                        = 36791,
+    NPC_SUPPRESSER                              = 37863,
+    NPC_BLISTERING_ZOMBIE                       = 37934,
+    NPC_GLUTTONOUS_ABOMINATION                  = 37886,
+    NPC_THE_LICH_KING_VALITHRIA                 = 16980,
+
     // Sindragosa
     NPC_SINDRAGOSA                              = 36853,
     NPC_SPINESTALKER                            = 37534,
@@ -260,23 +229,6 @@ enum CreaturesIds
     NPC_ICY_BLAST                               = 38223,
     NPC_FROST_BOMB                              = 37186,
     NPC_ICE_TOMB                                = 36980,
-
-    // The Lich King
-    NPC_THE_LICH_KING                           = 36597,
-    NPC_TIRION                                  = 38995,
-    NPC_ICE_SPHERE                              = 36633,
-    NPC_DRUDGE_GHOUL                            = 37695,
-    NPC_SHAMBLING_HORROR                        = 37698,
-    NPC_VALKYR                                  = 36609,
-    NPC_DEFILE                                  = 38757,
-    NPC_RAGING_SPIRIT                           = 36701,
-    NPC_TRIGGER                                 = 38667,
-    NPC_VILE_SPIRIT                             = 37799,
-    NPC_FROSTMOURNE_TRIGGER                     = 38584,
-    NPC_TERENAS_MENETHIL                        = 38579,
-    NPC_TERENAS_FIGHTER                         = 36823,
-    NPC_SPIRIT_WARDEN                           = 36824,
-    NPC_PLATFORM_DESTRUCTIBLE_EDGE_STALKER      = 22515,
 };
 
 enum GameObjectsIds
@@ -323,15 +275,6 @@ enum GameObjectsIds
     // Valithria Dreamwalker
     GO_GREEN_DRAGON_BOSS_ENTRANCE           = 201375,
     GO_GREEN_DRAGON_BOSS_EXIT               = 201374,
-    GO_VALITHRIA_ROOST_DOOR_1               = 201380,
-    GO_VALITHRIA_ROOST_DOOR_2               = 201381,
-    GO_VALITHRIA_ROOST_DOOR_3               = 201382,
-    GO_VALITHRIA_ROOST_DOOR_4               = 201383,
-    GO_VALITHRIA_ELEVATOR                   = 202234,
-    GO_DREAMWALKER_CACHE_10N                = 201959,
-    GO_DREAMWALKER_CACHE_25N                = 202338,
-    GO_DREAMWALKER_CACHE_10H                = 202339,
-    GO_DREAMWALKER_CACHE_25H                = 202340,
 
     // Sindragosa
     GO_SINDRAGOSA_ENTRANCE_DOOR             = 201373,
@@ -340,17 +283,6 @@ enum GameObjectsIds
     GO_ICE_WALL                             = 202396,
     GO_ICE_BLOCK                            = 201722,
     GO_SIGIL_OF_THE_FROSTWING               = 202181,
-
-    // The Lich King
-    GO_ICE_SHARD_1                          = 202141,
-    GO_ICE_SHARD_2                          = 202142,
-    GO_ICE_SHARD_3                          = 202143,
-    GO_ICE_SHARD_4                          = 202144,
-    GO_FROSTY_EDGE_OUTER                    = 202188,
-    GO_FROSTY_EDGE_INNER                    = 202189,
-    GO_EDGE_DESTROY_WARNING                 = 202190,
-    GO_FROZEN_LAVAMAN                       = 202436,
-    GO_LAVAMAN_PILLARS                      = 202437,
 };
 
 enum AchievementCriteriaIds
@@ -479,14 +411,6 @@ class spell_trigger_spell_from_caster : public SpellScriptLoader
         uint32 _triggerId;
 };
 
-extern Position const SindragosaSpawnPos;
-void UnsummonSpecificCreaturesNearby(Creature* ref, uint32 entry, float radius);
-uint32 GetPhase(const EventMap &em);
-void TeleportPlayerToFrozenThrone(Player* player);
-void LeaveOnlyPlayers(std::list<Unit*> &unitList);
-typedef std::list<Player*> TPlayerList;
-TPlayerList GetPlayersInTheMap(Map* pMap);
-TPlayerList GetAttackablePlayersInTheMap(Map* pMap);
 template<class AI>
 CreatureAI* GetIcecrownCitadelAI(Creature* creature)
 {
