@@ -618,7 +618,7 @@ bool ChatHandler::HandleLookupTeleCommand(const char * args)
     AccountTypes level = m_session->GetSecurity();
     if (uint32(level) == 0 && !m_session->IsVIP())
     {
-        SendSysMessage("Your account is not VIP.");
+        SendSysMessage("[VIP] Comando disponivel apenas para VIPs.");
         SetSentErrorMessage(true);
         return false;
     }

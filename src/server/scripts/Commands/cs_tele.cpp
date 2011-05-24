@@ -270,7 +270,7 @@ public:
         AccountTypes level = handler->GetSession()->GetSecurity();
         if (uint32(level) == 0 && !handler->GetSession()->IsVIP())
         {
-            handler->SendSysMessage("Your account is not VIP.");
+            handler->SendSysMessage("[VIP] Comando disponivel apenas para VIPs.");
             handler->SetSentErrorMessage(true);
             return false;
         }

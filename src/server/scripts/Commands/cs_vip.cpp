@@ -90,7 +90,7 @@ public:
             "SET gm = '%s', unsetdate = unsetdate + %u "
             "WHERE id = %u", gm.c_str(), duration_secs, targetAccountId);
 
-            handler->PSendSysMessage("VIP updated.");
+            handler->PSendSysMessage("VIP atualizado.");
 
             return true;
         }
@@ -102,7 +102,7 @@ public:
         "VALUES ('%u', '%s', UNIX_TIMESTAMP(), UNIX_TIMESTAMP() + %u, 1)",
         targetAccountId, gm.c_str(), duration_secs);
 
-        handler->PSendSysMessage("The account is now set as VIP.");
+        handler->PSendSysMessage("VIP setado com sucesso.");
 
         return true;
     }
@@ -141,11 +141,11 @@ public:
         QueryResult resultLogin = LoginDatabase.PQuery("SELECT DATEDIFF(FROM_UNIXTIME(unsetdate), NOW()) FROM account_vip WHERE id = %u AND active = 1", accountId);
 
         if (!resultLogin)
-            handler->PSendSysMessage("Account is not VIP.");
+            handler->PSendSysMessage("[VIP] Esta conta não é VIP.");
         else
         {
             uint32 days = (*resultLogin)[0].GetUInt32();
-            handler->PSendSysMessage("VIP ends in %u days.", days);
+            handler->PSendSysMessage("[VIP] O VIP expira em %u dia(s).", days);
         }
 
         return true;
