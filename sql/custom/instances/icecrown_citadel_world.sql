@@ -316,20 +316,13 @@ INSERT INTO `npc_text` (`id`, `text0_0`) VALUES
 (800004, 'Teleport to the Upper Spire.'),
 (800005, 'Teleport to the Sindragosa\'s Lair'),
 (800006, 'Teleport to The Frozen Throne');
-DELETE FROM `locales_npc_text` WHERE `entry` BETWEEN 800000 AND 800006;
-INSERT INTO `locales_npc_text` (`entry`, `Text0_0_loc8`) VALUES
-(800000, 'Молот света'),
-(800001, 'Молельня проклятых'),
-(800002, 'Черепной вал'),
-(800003, 'Подъем смертоносного'),
-(800004, 'Шпиль'),
-(800005, 'Логово Королевы Льда'),
-(800006, 'Ледяной трон');
 
 
 -- Temp solution for frostmourn room
+DELETE FROM `gameobject` WHERE `guid` = 2710388;
 INSERT INTO `gameobject` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`) VALUES
 ('2710388', '193070', '631', '15', '1', '520', '-2524', '1038.42', '4.47344', '0', '0', '0.786348', '-0.617784', '300', '255', '1');
+DELETE FROM `creature` WHERE guid IN (250250, 250251);
 INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`) VALUES
 ('250250', '36823', '631', '15', '1', '0', '0', '495', '-2502', '1050', '5.49385', '300', '0', '0', '315000', '59910', '0', '0', '0', '0', '0'),
 ('250251', '36824', '631', '15', '1', '0', '0', '495', '-2546', '1050.23', '1.72709', '300', '0', '0', '252000', '0', '0', '0', '0', '0', '0');
