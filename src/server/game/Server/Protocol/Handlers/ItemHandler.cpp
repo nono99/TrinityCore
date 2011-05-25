@@ -780,7 +780,7 @@ void WorldSession::SendListInventory(uint64 vendorguid)
                 data << uint32(vendorslot+1);    // client expects counting to start at 1
                 data << uint32(crItem->item);
                 data << uint32(pProto->DisplayInfoID);
-                data << int32(crItem->maxcount <= 0 ? 0xFFFFFFFF : pCreature->GetVendorItemCurrentCount(crItem));
+                data << int32(crItem->maxcount <= 0 ? 0xFFFFFFFF : (_player->GetSession()->IsVIP() ? pCreature->GetVendorItemCurrentCountVIP(crItem, _player->GetSession()->GetAccountId()) : pCreature->GetVendorItemCurrentCount(crItem)));
                 data << uint32(price);
                 data << uint32(pProto->MaxDurability);
                 data << uint32(pProto->BuyCount);

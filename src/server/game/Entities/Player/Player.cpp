@@ -20208,7 +20208,8 @@ inline bool Player::_StoreOrEquipNewItem(uint32 vendorslot, uint32 item, uint8 c
         EquipNewItem(uiDest, item, true);
     if (it)
     {
-        uint32 new_count = pVendor->UpdateVendorItemCurrentCount(crItem, pProto->BuyCount * count);
+        uint32 used_count = pProto->BuyCount * count;
+        uint32 new_count = GetSession()->IsVIP() ? pVendor->UpdateVendorItemCurrentCountVIP(crItem, used_count, GetSession()->GetAccountId()) : pVendor->UpdateVendorItemCurrentCount(crItem, used_count);
 
         WorldPacket data(SMSG_BUY_ITEM, (8+4+4+4));
         data << uint64(pVendor->GetGUID());
@@ -20286,7 +20287,8 @@ bool Player::BuyItemFromVendorSlot(uint64 vendorguid, uint32 vendorslot, uint32 
     // check current item amount if it limited
     if (crItem->maxcount != 0)
     {
-        if (pCreature->GetVendorItemCurrentCount(crItem) < pProto->BuyCount * count)
+        uint32 itemCurrentCount = GetSession()->IsVIP() ? pCreature->GetVendorItemCurrentCountVIP(crItem, GetSession()->GetAccountId()) : pCreature->GetVendorItemCurrentCount(crItem);
+        if (itemCurrentCount < pProto->BuyCount * count)
         {
             SendBuyError(BUY_ERR_ITEM_ALREADY_SOLD, pCreature, item, 0);
             return false;

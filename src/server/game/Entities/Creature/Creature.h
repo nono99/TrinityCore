@@ -369,6 +369,19 @@ struct VendorItemCount
 
 typedef std::list<VendorItemCount> VendorItemCounts;
 
+struct VendorItemCountVIP
+{
+    explicit VendorItemCountVIP(uint32 _item, uint32 _count, uint32 _accountId)
+        : itemId(_item), count(_count), lastIncrementTime(time(NULL)), accountId(_accountId) {}
+
+    uint32 itemId;
+    uint32 count;
+    time_t lastIncrementTime;
+    uint32 accountId;
+};
+
+typedef std::list<VendorItemCountVIP> VendorItemCountsVIP;
+
 struct TrainerSpell
 {
     TrainerSpell() : spell(0), spellCost(0), reqSkill(0), reqSkillValue(0), reqLevel(0)
@@ -524,6 +537,8 @@ class Creature : public Unit, public GridObject<Creature>
         VendorItemData const* GetVendorItems() const;
         uint32 GetVendorItemCurrentCount(VendorItem const* vItem);
         uint32 UpdateVendorItemCurrentCount(VendorItem const* vItem, uint32 used_count);
+        uint32 GetVendorItemCurrentCountVIP(VendorItem const* vItem, uint32 accountId);
+        uint32 UpdateVendorItemCurrentCountVIP(VendorItem const* vItem, uint32 used_count, uint32 accountId);
 
         TrainerSpellData const* GetTrainerSpells() const;
 
@@ -686,6 +701,7 @@ class Creature : public Unit, public GridObject<Creature>
 
         // vendor items
         VendorItemCounts m_vendorItemCounts;
+        VendorItemCountsVIP m_vendorItemCountsVIP;
 
         static float _GetHealthMod(int32 Rank);
 

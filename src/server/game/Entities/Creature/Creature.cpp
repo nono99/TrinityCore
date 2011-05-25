@@ -166,6 +166,7 @@ m_formation(NULL)
 Creature::~Creature()
 {
     m_vendorItemCounts.clear();
+    m_vendorItemCountsVIP.clear();
 
     delete i_AI;
     i_AI = NULL;
@@ -2357,6 +2358,78 @@ uint32 Creature::UpdateVendorItemCurrentCount(VendorItem const* vItem, uint32 us
     }
 
     VendorItemCount* vCount = &*itr;
+
+    time_t ptime = time(NULL);
+
+    if (time_t(vCount->lastIncrementTime + vItem->incrtime) <= ptime)
+    {
+        ItemTemplate const* pProto = sObjectMgr->GetItemTemplate(vItem->item);
+
+        uint32 diff = uint32((ptime - vCount->lastIncrementTime)/vItem->incrtime);
+        if ((vCount->count + diff * pProto->BuyCount) < vItem->maxcount)
+            vCount->count += diff * pProto->BuyCount;
+        else
+            vCount->count = vItem->maxcount;
+    }
+
+    vCount->count = vCount->count > used_count ? vCount->count-used_count : 0;
+    vCount->lastIncrementTime = ptime;
+    return vCount->count;
+}
+
+uint32 Creature::GetVendorItemCurrentCountVIP(VendorItem const* vItem, uint32 accountId)
+{
+    if (!vItem->maxcount)
+        return vItem->maxcount;
+
+    VendorItemCountsVIP::iterator itr = m_vendorItemCountsVIP.begin();
+    for (; itr != m_vendorItemCountsVIP.end(); ++itr)
+        if (itr->itemId == vItem->item && itr->accountId == accountId)
+            break;
+
+    if (itr == m_vendorItemCountsVIP.end())
+        return vItem->maxcount;
+
+    VendorItemCountVIP* vCount = &*itr;
+
+    time_t ptime = time(NULL);
+
+    if (time_t(vCount->lastIncrementTime + vItem->incrtime) <= ptime)
+    {
+        ItemTemplate const* pProto = sObjectMgr->GetItemTemplate(vItem->item);
+
+        uint32 diff = uint32((ptime - vCount->lastIncrementTime)/vItem->incrtime);
+        if ((vCount->count + diff * pProto->BuyCount) >= vItem->maxcount)
+        {
+            m_vendorItemCountsVIP.erase(itr);
+            return vItem->maxcount;
+        }
+
+        vCount->count += diff * pProto->BuyCount;
+        vCount->lastIncrementTime = ptime;
+    }
+
+    return vCount->count;
+}
+
+uint32 Creature::UpdateVendorItemCurrentCountVIP(VendorItem const* vItem, uint32 used_count, uint32 accountId)
+{
+    if (!vItem->maxcount)
+        return 0;
+
+    VendorItemCountsVIP::iterator itr = m_vendorItemCountsVIP.begin();
+    for (; itr != m_vendorItemCountsVIP.end(); ++itr)
+        if (itr->itemId == vItem->item && itr->accountId == accountId)
+            break;
+
+    if (itr == m_vendorItemCountsVIP.end())
+    {
+        uint32 new_count = vItem->maxcount > used_count ? vItem->maxcount-used_count : 0;
+        m_vendorItemCountsVIP.push_back(VendorItemCountVIP(vItem->item, new_count, accountId));
+        return new_count;
+    }
+
+    VendorItemCountVIP* vCount = &*itr;
 
     time_t ptime = time(NULL);
 
