@@ -1240,6 +1240,7 @@ void AddBattlegroundScripts()
 /* This is where custom scripts' loading functions should be declared. */
 void AddSC_DuelReset();
 void AddSC_npc_teleport();
+void AddSC_npc_vip();
 #endif
 
 void AddCustomScripts()
@@ -1248,5 +1249,6 @@ void AddCustomScripts()
     /* This is where custom scripts should be added. */
     AddSC_DuelReset();
     AddSC_npc_teleport();
+    AddSC_npc_vip();
 #endif
 }

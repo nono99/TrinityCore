@@ -12,6 +12,7 @@ set(scripts_STAT_SRCS
   ${scripts_STAT_SRCS}
   Custom/duel_reset.cpp
   Custom/npc_teleport.cpp
+  Custom/npc_vip.cpp
 )
 
 message("  -> Prepared: Custom")
