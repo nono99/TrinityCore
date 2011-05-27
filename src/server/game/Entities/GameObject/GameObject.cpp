@@ -549,12 +549,14 @@ void GameObject::Update(uint32 diff)
 
             loot.clear();
 
-            if (GetOwnerGUID() || m_spellId)
+            if (GetOwnerGUID())
             {
                 if (Unit* owner = GetOwner())
+                {
                     owner->RemoveGameObject(this, false);
-                SetRespawnTime(0);
-                Delete();
+                    SetRespawnTime(0);
+                    Delete();
+                }
                 return;
             }
 
