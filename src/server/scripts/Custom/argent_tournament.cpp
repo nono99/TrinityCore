@@ -378,7 +378,7 @@ public:
 #define LIP_BALM_SPELL 62574
 #define FROG_LOVE 62537
 #define SUMMON_ASHOOD_BRAND_SPELL 62554
-#define MAIDEN_SAY "Неужели это может быть? Свободна после всех этих многих лет?"
+#define MAIDEN_SAY "Could it be? Free after all these years?"
 
 struct A_BLADE_FIT_FOR_A_CHAMPION_QUEST
 { 
