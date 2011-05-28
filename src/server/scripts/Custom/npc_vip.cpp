@@ -18,7 +18,7 @@ public:
         if (pCreature->isVendor())
         {
             pPlayer->CLOSE_GOSSIP_MENU();
-            pPlayer->SEND_VENDORLIST(pCreature->GetGUID());
+            pPlayer->GetSession()->SendListInventory(pCreature->GetGUID());
             return true;
         }
 
