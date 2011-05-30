@@ -165,10 +165,9 @@ class boss_lord_marrowgar : public CreatureScript
                             break;
                         case EVENT_COLDFLAME:
                             _coldflameLastPos.Relocate(me);
-                            //if (!me->HasAura(SPELL_BONE_STORM))
-                            //    me->CastCustomSpell(SPELL_COLDFLAME_NORMAL, SPELLVALUE_MAX_TARGETS, 1, me);
-                            //else
-                            if (me->HasAura(SPELL_BONE_STORM))
+                            if (!me->HasAura(SPELL_BONE_STORM))
+                                me->CastCustomSpell(SPELL_COLDFLAME_NORMAL, SPELLVALUE_MAX_TARGETS, 1, me);
+                            else
                                 DoCast(me, SPELL_COLDFLAME_BONE_STORM);
                             events.ScheduleEvent(EVENT_COLDFLAME, 5000, EVENT_GROUP_SPECIAL);
                             break;
