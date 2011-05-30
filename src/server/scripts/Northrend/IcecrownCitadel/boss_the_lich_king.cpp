@@ -1402,7 +1402,7 @@ class npc_tirion_icc : public CreatureScript
             if (!instance)
                 return false;
 
-            Player *unfriendlyPlayer = NULL;
+            /*Player *unfriendlyPlayer = NULL;
             const Map::PlayerList &PlayerList = creature->GetMap()->GetPlayers();
             if (!PlayerList.isEmpty())
                 for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
@@ -1419,7 +1419,7 @@ class npc_tirion_icc : public CreatureScript
                 sprintf(buf, "Sorry, but everyone in raid should have at least friendly reputation with the Argent Crusade to participate in the final battle. Player '%s' doesn't meet this requirement.", unfriendlyPlayer->GetName());
                 creature->MonsterSay(buf, LANG_UNIVERSAL, player->GetGUID());
                 return true;
-            }
+            }*/
 
             if (instance->GetData(DATA_THE_LICH_KING) == DONE)
             {
