@@ -3113,7 +3113,6 @@ void Unit::DeMorph()
 }
 
 void Unit::_AddAura(UnitAura * aura, Unit * caster)
-{
     ASSERT(!m_cleanupDone);
     m_ownedAuras.insert(AuraMap::value_type(aura->GetId(), aura));
 
